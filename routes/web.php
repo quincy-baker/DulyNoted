@@ -17,4 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/github', 'HomeController@index');
+Route::get('/github', 'GitHubController@index');
+Route::get('/github/details/{username}', 'GitHubController@getRepos');
