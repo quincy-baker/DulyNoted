@@ -24,13 +24,11 @@ class GitHubController extends Controller
     public function index(Request $request)
     {
         $username = $request->user();
-        // $user = str_replace(' ', '-', $username);
-        // dd(json_encode($user));
-
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', 'https://api.github.com/users/quincy-baker');
+        $response = $client->request('GET', 'https://api.github.com/users/' . $username['name'] . '/repos');
         $data = json_decode($response->getBody()->getContents(), true);
-    
+        
+        // return response()->json($data, 200, [], JSON_PRETTY_PRINT);
         return view('github')->with(compact('data'));
     }
 
@@ -39,20 +37,32 @@ class GitHubController extends Controller
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', 'https://api.github.com/users/' . $username . '/repos');
         $data = json_decode($response->getBody()->getContents(), true);
-        // $x = [
-        //     'repo_count' => count($data),
-        //     'most_stars' => array_reduce($data, function ($mostStars, $currentRepo) {
-        //         return $currentRepo['stargazers_count'] > $mostStars ? $currentRepo['stargazers_count'] : $mostStars;
-        //     }, 0),
-        //     'repos' => $data
-        // ];
-        // $x = $data;
-        // for ($i=0; $i < sizeof($x) ; $i++) { 
-        //   $name = $x[$i]['name'];
-        //   $issues_url = $x[$i]['issues_url'];
-        // }
-        return response()->json($data,200,[],JSON_PRETTY_PRINT);
+
+        // $name = $data['login'];
+        // $avatar = $data['avatar_url'];
+        // $issues = $data['issues_url'];
+
+        // return response()->json($data,200,[],JSON_PRETTY_PRINT);
+
         return view('details')->with(compact('data'));
+
+    }
+
+    public function getIssues($repo, $issue_count)
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', 'https://api.github.com/repos/quincy-baker/' . $repo . '/issues/' . $issue_count);
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        // $y = [];
+        // for ($i=0; $i < sizeof($x) ; $i++) { 
+        //   array_push($y, $x[$i]['name']);
+        //   array_push($y, $x[$i]['issues_url']);
+        // }
+        // dd($data);
+        // return response()->json($data,200,[],JSON_PRETTY_PRINT);
+
+        return view('issues')->with(compact('data'));
 
     }
 }

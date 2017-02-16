@@ -12,11 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/github', 'HomeController@index');
 Route::get('/github', 'GitHubController@index');
-Route::get('/github/details/{username}', 'GitHubController@getRepos');
+// Route::get('/github/{username}', 'GitHubController@getRepos');
+Route::get('/github/{repo}/{issue_count}', 'GitHubController@getIssues');
+
+Route::resource('note', 'NoteController');

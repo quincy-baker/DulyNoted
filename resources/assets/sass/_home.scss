@@ -1,0 +1,26 @@
+#home {
+	position: absolute;
+	top:0;bottom:0;left:0;right:0;
+	#LeftPanel{
+		position: absolute;
+		top:0;bottom:0;
+		left:0;		
+		height: 100%;
+	    width: 50%;
+	    background: black;
+		.panel-wrapper {
+			margin-top: 300px;
+		}
+	}
+	#RightPanel{
+		position: absolute;
+		top:0;bottom:0;
+		right:0;
+		height: 100%;
+	    width: 50%;
+		background: cornflowerblue;	
+		.panel-wrapper {
+			margin-top: 300px;
+		}
+	}
+}
